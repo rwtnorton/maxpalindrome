@@ -22,11 +22,15 @@
        (remove empty?)
        (into #{})))
 
+(defn find-all-palindromes
+  [s]
+  (->> (generate-substrings s)
+       (filter palindrome?)
+       (sort-by count >)))
+
 (defn find-max-palindrome
   [s]
-  (let [vs (->> (generate-substrings s)
-                (filter palindrome?)
-                (sort-by count >))]
+  (let [vs (find-all-palindromes s)]
     (if-not (seq vs)
       (first vs)
       (let [v (first vs)]
